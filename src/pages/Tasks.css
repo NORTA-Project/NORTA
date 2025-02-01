@@ -1,0 +1,96 @@
+/* Tasks.css */
+
+.tasks-container {
+    margin: 0 auto;
+    padding: 20px;
+    background: #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tasks-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.task-form {
+    max-width: 85vw;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    background: #2c2c2c;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    justify-content: center;
+}
+
+.task-form label, .task-form input, .task-form select, .task-form button {
+    flex: 1 1 calc(50% - 8px);
+    min-width: 200px;
+    color: #ffffff;
+}
+
+.task-form input, .task-form select {
+    background: #3c3c3c;
+    border: 1px solid #555555;
+    color: #ffffff;
+}
+
+.task-add-button {
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.task-add-button:hover {
+    background-color: #0056b3;
+}
+
+.task-list {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+}
+
+.task-card {
+    background: #2c2c2c;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(50% - 8px);
+    min-width: 300px;
+    max-width: 400px;
+    color: #ffffff;
+}
+
+.task-meta {
+    font-size: 14px;
+    color: #aaaaaa;
+}
+
+.task-delete-button {
+    margin-top: 10px;
+    background-color: #dc3545;
+    color: white;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.task-delete-button:hover {
+    background-color: #b02a37;
+}
