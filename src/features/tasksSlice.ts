@@ -1,14 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 
 interface Task {
 id: string;
 title: string;
 description: string;
-dueDate: string;
+startDate: string;
+endDate: string;
 assignee: string;
 priority: string;
+status: string;
+group: string;
+createdAt: string;
 }
 
 interface TasksState {
@@ -64,8 +68,13 @@ dispatch(removeTask(id));
 
 export const editTask = (task: Task) => async (dispatch: any) => {
 const taskRef = doc(db, "tasks", task.id);
-await updateDoc(taskRef, task);
-dispatch(updateTask(task));
+const taskDoc = await getDoc(taskRef);
+if (taskDoc.exists()) {
+    const existingData = taskDoc.data();
+    const updatedData = { ...existingData, ...task };
+    await updateDoc(taskRef, updatedData);
+    dispatch(updateTask(task));
+}
 };
 
 export default tasksSlice.reducer;

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import plusIcon from "../assets/icon/plus.png";
 import tasktrayIcon from "../assets/icon/tasktray.png";
 // import homeIcon from "../assets/icon/Home.png";
+import tableIcon from "../assets/icon/Table.png";
 import tasksIcon from "../assets/icon/Tasks.png";
 import appIcon from "../assets/icon/NORTA-icon-3.png";
 import TaskForm from "./TaskForm";
@@ -23,7 +24,9 @@ return (
     <Link to="/tasks">
         <img src={tasksIcon} alt="Tasks" />
     </Link>
-    <img src={tasktrayIcon} alt="Feature 1" />
+    <Link to="/table">
+        <img src={tableIcon} alt="Table" />
+    </Link>
     <img src={tasktrayIcon} alt="Feature 2" />
     <img src={tasktrayIcon} alt="Feature 3" />
     <img src={tasktrayIcon} alt="Feature 4" />

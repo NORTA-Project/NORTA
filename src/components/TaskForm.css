@@ -9,7 +9,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 1000; /* 追加 */
 }
 
 .task-form-content {
@@ -20,6 +20,7 @@
     width: 90%;
     max-width: 500px;
     color: #ffffff;
+    z-index: 1001; /* 追加 */
 }
 
 .task-form-content h2 {

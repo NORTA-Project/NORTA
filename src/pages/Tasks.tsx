@@ -1,56 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
 import { fetchTasks, deleteTask } from "../features/tasksSlice";
 import TaskForm from "../components/TaskForm";
 import ConfirmDialog from "../components/ConfirmDialog";
+import { useTaskModals } from "../hooks/useTaskModals";
 import "./Tasks.css";
 
 function Tasks() {
 const dispatch = useDispatch<AppDispatch>();
 const tasks = useSelector((state: RootState) => state.tasks.tasks);
-const [isTaskFormOpen, setIsTaskFormOpen] = useState(false);
-const [taskToEdit, setTaskToEdit] = useState<{
-    id: string;
-    title: string;
-    description: string;
-    dueDate: string;
-    assignee: string;
-    priority: string;
-} | null>(null);
-const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
-const [taskToDelete, setTaskToDelete] = useState<string | null>(null);
+const {
+    isTaskFormOpen,
+    taskToEdit,
+    isConfirmDialogOpen,
+    taskToDelete,
+    openTaskForm,
+    closeTaskForm,
+    openConfirmDialog,
+    closeConfirmDialog,
+} = useTaskModals();
 
 useEffect(() => {
     dispatch(fetchTasks());
 }, [dispatch]);
-
-const openTaskForm = (task: {
-    id: string;
-    title: string;
-    description: string;
-    dueDate: string;
-    assignee: string;
-    priority: string;
-} | null = null) => {
-    setTaskToEdit(task);
-    setIsTaskFormOpen(true);
-};
-
-const closeTaskForm = () => {
-    setTaskToEdit(null);
-    setIsTaskFormOpen(false);
-};
-
-const openConfirmDialog = (taskId: string) => {
-    setTaskToDelete(taskId);
-    setIsConfirmDialogOpen(true);
-};
-
-const closeConfirmDialog = () => {
-    setTaskToDelete(null);
-    setIsConfirmDialogOpen(false);
-};
 
 const handleDeleteTask = () => {
     if (taskToDelete) {
@@ -67,12 +40,15 @@ return (
         <div key={task.id} className="task-card">
             <h2>{task.title}</h2>
             <p>{task.description}</p>
-            <p className="task-meta">Due: {task.dueDate}</p>
+            <p className="task-meta">Start: {task.startDate}</p>
+            <p className="task-meta">End: {task.endDate}</p>
             <p className="task-meta">Assignee: {task.assignee}</p>
             <p className="task-meta">Priority: {task.priority}</p>
-            <button onClick={() => openTaskForm(task)} className="task-edit-button task-button">Edit</button>
-            <button onClick={() => openConfirmDialog(task.id)} className="task-delete-button task-button">Delete</button>
-            
+            <p className="task-meta">Status: {task.status}</p>
+            <p className="task-meta">Group: {task.group}</p>
+            <p className="task-meta">Created At: {task.createdAt}</p>
+            <button onClick={() => openTaskForm(task)} className="task-detail-button task-button">詳細</button>
+            <button onClick={() => openConfirmDialog(task.id)} className="task-delete-button task-button">削除</button>
         </div>
         ))}
     </div>

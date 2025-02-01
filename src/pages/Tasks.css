@@ -98,3 +98,12 @@
 .task-delete-button:hover {
     background-color: #b02a37;
 }
+
+.task-detail-button {
+    background-color: #007bff;
+    color: white;
+}
+
+.task-detail-button:hover {
+    background-color: #0056b3;
+}

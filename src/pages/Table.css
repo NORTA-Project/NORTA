@@ -1,0 +1,98 @@
+.table-container {
+    margin: 0 auto;
+    padding: 20px;
+    background: #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative; /* 追加 */
+    z-index: 1; /* 追加 */
+}
+
+.table-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.task-group {
+    margin-bottom: 40px;
+    width: 100%;
+}
+
+.group-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.task-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #2c2c2c;
+    color: #ffffff;
+}
+
+.task-table th,
+.task-table td {
+    padding: 10px;
+    border: 1px solid #555555;
+    text-align: left;
+}
+
+.task-table th {
+    background: #3c3c3c;
+    position: relative;
+}
+
+.task-table tbody tr:nth-child(even) {
+    background: #3c3c3c;
+}
+
+.resizable-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.resize-handle {
+    width: 5px;
+    height: 100%;
+    cursor: col-resize;
+    background: #555555;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.task-detail-button {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.task-detail-button:hover {
+    background-color: #0056b3;
+}
+
+.task-delete-button {
+    background-color: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.task-delete-button:hover {
+    background-color: #b02a37;
+}
