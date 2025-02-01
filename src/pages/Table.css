@@ -7,8 +7,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative; /* 追加 */
-    z-index: 1; /* 追加 */
 }
 
 .table-title {
@@ -95,4 +93,46 @@
 
 .task-delete-button:hover {
     background-color: #b02a37;
+}
+
+/* ステータスの背景色 */
+.status-completed {
+    background-color: #28a745; /* 緑 */
+    color: white;
+}
+
+.status-in-progress {
+    background-color: #ffc107; /* 黄色 */
+    color: black;
+}
+
+.status-stuck {
+    background-color: #dc3545; /* 赤 */
+    color: white;
+}
+
+.status-not-started {
+    background-color: #6c757d; /* 灰色 */
+    color: white;
+}
+
+/* 優先度の背景色 */
+.priority-important {
+    background-color: white;
+    color: black;
+}
+
+.priority-high {
+    background-color: #ff4500; /* オレンジ */
+    color: white;
+}
+
+.priority-medium {
+    background-color: #b35a11; /* ゴールド */
+    color: white;
+}
+
+.priority-low {
+    background-color: #523500; /* ライトイエロー */
+    color: white;
 }

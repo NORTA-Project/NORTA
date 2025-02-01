@@ -77,6 +77,36 @@ const handleDeleteTask = () => {
     }
 };
 
+const getStatusClass = (status: string) => {
+    switch (status) {
+    case "完了":
+        return "status-completed";
+    case "作業中":
+        return "status-in-progress";
+    case "スタック":
+        return "status-stuck";
+    case "未着手":
+        return "status-not-started";
+    default:
+        return "";
+    }
+};
+
+const getPriorityClass = (priority: string) => {
+    switch (priority) {
+    case "⚠Important⚠":
+        return "priority-important";
+    case "High":
+        return "priority-high";
+    case "Medium":
+        return "priority-medium";
+    case "Low":
+        return "priority-low";
+    default:
+        return "";
+    }
+};
+
 return (
     <div className="table-container">
     <h1 className="table-title">Tasks Table</h1>
@@ -103,9 +133,9 @@ return (
             {groupedTasks[group].map((task) => (
                 <tr key={task.id}>
                 <td>{task.title}</td>
-                <td>{task.status}</td>
+                <td className={getStatusClass(task.status)}>{task.status}</td>
                 <td>{`${new Date(task.startDate).toLocaleDateString()} ⇒ ${new Date(task.endDate).toLocaleDateString()}`}</td>
-                <td>{task.priority}</td>
+                <td className={getPriorityClass(task.priority)}>{task.priority}</td>
                 <td>{task.assignee}</td>
                 <td>
                     <button onClick={() => openTaskForm(task)} className="task-detail-button">詳細</button>
