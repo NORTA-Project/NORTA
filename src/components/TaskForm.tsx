@@ -1,16 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store";
-import { createTask } from "../features/tasksSlice";
+import { createTask, editTask } from "../features/tasksSlice";
 import "./TaskForm.css";
 
-const TaskForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+interface TaskFormProps {
+onClose: () => void;
+taskToEdit?: {
+    id: string;
+    title: string;
+    description: string;
+    dueDate: string;
+    assignee: string;
+    priority: string;
+} | null;
+}
+
+const TaskForm: React.FC<TaskFormProps> = ({ onClose, taskToEdit }) => {
 const dispatch = useDispatch<AppDispatch>();
 const [taskTitle, setTaskTitle] = useState("");
 const [taskDescription, setTaskDescription] = useState("");
 const [taskDueDate, setTaskDueDate] = useState("");
 const [taskAssignee, setTaskAssignee] = useState("");
 const [taskPriority, setTaskPriority] = useState("");
+
+useEffect(() => {
+    if (taskToEdit) {
+    setTaskTitle(taskToEdit.title);
+    setTaskDescription(taskToEdit.description);
+    setTaskDueDate(taskToEdit.dueDate);
+    setTaskAssignee(taskToEdit.assignee);
+    setTaskPriority(taskToEdit.priority);
+    }
+}, [taskToEdit]);
 
 const handleAddTask = () => {
     if (!taskTitle) return;
@@ -23,18 +45,28 @@ const handleAddTask = () => {
         priority: taskPriority,
     })
     );
-    setTaskTitle("");
-    setTaskDescription("");
-    setTaskDueDate("");
-    setTaskAssignee("");
-    setTaskPriority("");
+    onClose();
+};
+
+const handleEditTask = () => {
+    if (!taskTitle || !taskToEdit) return;
+    dispatch(
+    editTask({
+        id: taskToEdit.id,
+        title: taskTitle,
+        description: taskDescription,
+        dueDate: taskDueDate,
+        assignee: taskAssignee,
+        priority: taskPriority,
+    })
+    );
     onClose();
 };
 
 return (
-    <div className="task-form-popup">
-    <div className="task-form-content">
-        <h2>Add Task</h2>
+    <div className="task-form-popup" onClick={onClose}>
+    <div className="task-form-content" onClick={(e) => e.stopPropagation()}>
+        <h2>{taskToEdit ? "Edit Task" : "Add Task"}</h2>
         <label>Title</label>
         <input type="text" value={taskTitle} onChange={(e) => setTaskTitle(e.target.value)} placeholder="Task title" />
         
@@ -55,9 +87,11 @@ return (
         <option value="High">High</option>
         </select>
         
-        <button onClick={handleAddTask} className="task-add-button">Add Task</button>
+        <button onClick={taskToEdit ? handleEditTask : handleAddTask} className="task-add-button">
+        {taskToEdit ? "Save Changes" : "Add Task"}
+        </button>
         <button onClick={onClose} className="task-cancel-button">Cancel</button>
-</div>
+    </div>
     </div>
 );
 };
