@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import { AppDispatch } from "../store"; // AppDispatch をインポート
 
-interface Task {
+export interface Task {
 id: string;
 title: string;
 description: string;
@@ -47,7 +48,7 @@ reducers: {
 
 export const { setTasks, addTask, removeTask, updateTask } = tasksSlice.actions;
 
-export const fetchTasks = () => async (dispatch: any) => {
+export const fetchTasks = () => async (dispatch: AppDispatch) => {
 const querySnapshot = await getDocs(collection(db, "tasks"));
 const tasks: Task[] = [];
 querySnapshot.forEach((doc) => {
@@ -56,17 +57,17 @@ querySnapshot.forEach((doc) => {
 dispatch(setTasks(tasks));
 };
 
-export const createTask = (task: Omit<Task, "id">) => async (dispatch: any) => {
+export const createTask = (task: Omit<Task, "id">) => async (dispatch: AppDispatch) => {
 const docRef = await addDoc(collection(db, "tasks"), task);
 dispatch(addTask({ id: docRef.id, ...task }));
 };
 
-export const deleteTask = (id: string) => async (dispatch: any) => {
+export const deleteTask = (id: string) => async (dispatch: AppDispatch) => {
 await deleteDoc(doc(db, "tasks", id));
 dispatch(removeTask(id));
 };
 
-export const editTask = (task: Task) => async (dispatch: any) => {
+export const editTask = (task: Task) => async (dispatch: AppDispatch) => {
 const taskRef = doc(db, "tasks", task.id);
 const taskDoc = await getDoc(taskRef);
 if (taskDoc.exists()) {
