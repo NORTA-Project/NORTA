@@ -1,11 +1,24 @@
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { RootState, AppDispatch } from "../store";
+import { fetchTasks } from "../features/tasksSlice";
 import HelpTooltip from "../components/HelpTooltip";
+import useAuth from "../hooks/useAuth";
 import "./Home.css";
 
 function Home() {
+    const dispatch = useDispatch<AppDispatch>();
+    const { user } = useAuth();
     const tasks = useSelector((state: RootState) => state.tasks.tasks);
+    
+    // ユーザーのタスクを取得
+    useEffect(() => {
+        if (user?.uid) {
+            dispatch(fetchTasks(user.uid));
+        }
+    }, [dispatch, user?.uid]);
+    
     const totalTasks = tasks.length;
     const completedTasks = tasks.filter(task => task.status === "完了").length;
     const inProgressTasks = tasks.filter(task => task.status === "進行中").length;

@@ -7,14 +7,20 @@ import tasksIcon from "../assets/icon/Tasks.png";
 import appIcon from "../assets/icon/NORTA-icon-3.png";
 import homeIcon from "../assets/icon/Home.png";
 import TaskForm from "./TaskForm";
+import UserProfile from "./UserProfile";
+import useAuth from "../hooks/useAuth";
 
 const Sidebar = () => {
     const [isTaskFormOpen, setIsTaskFormOpen] = useState(false);
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [showLabels, setShowLabels] = useState(false); // デフォルトで縮小状態
     const location = useLocation();
+    const { user } = useAuth();
 
     const openTaskForm = () => setIsTaskFormOpen(true);
     const closeTaskForm = () => setIsTaskFormOpen(false);
+    const openProfile = () => setIsProfileOpen(true);
+    const closeProfile = () => setIsProfileOpen(false);
     const toggleLabels = () => setShowLabels(!showLabels);
 
     const isActive = (path: string) => location.pathname === path;
@@ -27,6 +33,29 @@ const Sidebar = () => {
                         <img src={appIcon} alt="ホーム" />
                         {showLabels && <span className="sidebar-label">ホーム</span>}
                     </Link>
+                </div>
+                
+                {/* ユーザー情報表示 */}
+                <div className="sidebar-user">
+                    <div 
+                        className="sidebar-item user-item" 
+                        onClick={openProfile}
+                        title="ユーザープロフィール"
+                    >
+                        {user?.photoURL ? (
+                            <img src={user.photoURL} alt="プロフィール" className="user-avatar" />
+                        ) : (
+                            <div className="user-avatar-placeholder">
+                                {(user?.displayName || user?.email || 'U')[0].toUpperCase()}
+                            </div>
+                        )}
+                        {showLabels && (
+                            <div className="user-info">
+                                <span className="user-name">{user?.displayName || 'ユーザー'}</span>
+                                <span className="user-email">{user?.email}</span>
+                            </div>
+                        )}
+                    </div>
                 </div>
                 
                 <div className="sidebar-main">
@@ -80,6 +109,7 @@ const Sidebar = () => {
             </div>
             
             {isTaskFormOpen && <TaskForm onClose={closeTaskForm} />}
+            {isProfileOpen && <UserProfile onClose={closeProfile} />}
         </>
     );
 };

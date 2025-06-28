@@ -5,6 +5,7 @@ import { fetchTasks, deleteTask } from "../features/tasksSlice";
 import TaskForm from "../components/TaskForm";
 import ConfirmDialog from "../components/ConfirmDialog";
 import { useTaskModals } from "../hooks/useTaskModals";
+import useAuth from "../hooks/useAuth";
 import "./Table.css";
 
 interface Task {
@@ -22,6 +23,7 @@ interface Task {
 
 const Table = () => {
     const dispatch = useDispatch<AppDispatch>();
+    const { user } = useAuth();
     const tasks = useSelector((state: RootState) => state.tasks.tasks);
     const [sortField, setSortField] = useState<keyof Task>("createdAt");
     const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
@@ -40,8 +42,10 @@ const Table = () => {
     } = useTaskModals();
 
     useEffect(() => {
-        dispatch(fetchTasks());
-    }, [dispatch]);
+        if (user?.uid) {
+            dispatch(fetchTasks(user.uid));
+        }
+    }, [dispatch, user?.uid]);
 
     const handleDeleteTask = () => {
         if (taskToDelete) {

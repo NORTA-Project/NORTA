@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store";
 import { createTask, editTask } from "../features/tasksSlice";
 import HelpTooltip from "./HelpTooltip";
+import useAuth from "../hooks/useAuth";
 import "./TaskForm.css";
 
 interface TaskFormProps {
@@ -18,11 +19,14 @@ interface TaskFormProps {
         status: string;
         group: string;
         createdAt: string;
+        ownerId: string;
+        ownerEmail?: string;
     } | null;
 }
 
 const TaskForm = ({ onClose, taskToEdit }: TaskFormProps) => {
     const dispatch = useDispatch<AppDispatch>();
+    const { user } = useAuth();
     const [taskTitle, setTaskTitle] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
     const [taskStartDate, setTaskStartDate] = useState("");
@@ -64,6 +68,11 @@ const TaskForm = ({ onClose, taskToEdit }: TaskFormProps) => {
     const handleSubmit = () => {
         if (!validateForm()) return;
         
+        if (!user) {
+            setErrors({ general: "ユーザー情報が見つかりません" });
+            return;
+        }
+        
         const taskData = {
             title: taskTitle.trim(),
             description: taskDescription.trim(),
@@ -74,6 +83,8 @@ const TaskForm = ({ onClose, taskToEdit }: TaskFormProps) => {
             status: taskStatus,
             group: taskGroup.trim(),
             createdAt: taskToEdit ? taskToEdit.createdAt : new Date().toISOString(),
+            ownerId: user.uid,
+            ownerEmail: user.email || undefined,
         };
 
         if (taskToEdit) {

@@ -5,10 +5,12 @@ import { fetchTasks, deleteTask } from "../features/tasksSlice";
 import TaskForm from "../components/TaskForm";
 import ConfirmDialog from "../components/ConfirmDialog";
 import { useTaskModals } from "../hooks/useTaskModals";
+import useAuth from "../hooks/useAuth";
 import "./Tasks.css";
 
 function Tasks() {
     const dispatch = useDispatch<AppDispatch>();
+    const { user } = useAuth();
     const tasks = useSelector((state: RootState) => state.tasks.tasks);
     const [statusFilter, setStatusFilter] = useState("全て");
     const [priorityFilter, setPriorityFilter] = useState("全て");
@@ -25,8 +27,10 @@ function Tasks() {
     } = useTaskModals();
 
     useEffect(() => {
-        dispatch(fetchTasks());
-    }, [dispatch]);
+        if (user?.uid) {
+            dispatch(fetchTasks(user.uid));
+        }
+    }, [dispatch, user?.uid]);
 
     const handleDeleteTask = () => {
         if (taskToDelete) {

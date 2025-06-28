@@ -6,6 +6,7 @@ import { format, startOfMonth, endOfMonth, eachDayOfInterval, addDays, parseISO 
 import { ja } from "date-fns/locale";
 import TaskForm from "../components/TaskForm";
 import { useTaskModals } from "../hooks/useTaskModals";
+import useAuth from "../hooks/useAuth";
 import "./Gantt.css";
 
 interface GanttTask {
@@ -21,6 +22,7 @@ interface GanttTask {
 
 const Gantt = () => {
     const dispatch = useDispatch<AppDispatch>();
+    const { user } = useAuth();
     const tasks = useSelector((state: RootState) => state.tasks.tasks);
     const [currentDate, setCurrentDate] = useState(new Date());
     const [viewMode, setViewMode] = useState<"month" | "quarter">("month");
@@ -34,8 +36,10 @@ const Gantt = () => {
     } = useTaskModals();
 
     useEffect(() => {
-        dispatch(fetchTasks());
-    }, [dispatch]);
+        if (user?.uid) {
+            dispatch(fetchTasks(user.uid));
+        }
+    }, [dispatch, user?.uid]);
 
     // タスクをガントチャート用に変換
     const ganttTasks: GanttTask[] = useMemo(() => {
