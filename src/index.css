@@ -69,20 +69,156 @@ button:focus-visible {
   background-color: #1e1e1e;
   display: flex;
   flex-direction: column;
+  border-right: 1px solid #333;
+  z-index: 1000;
+  transition: width 0.3s ease;
+  box-sizing: border-box; /* パディングとボーダーを幅に含める */
+}
+
+.sidebar.sidebar-expanded {
+  width: 160px; /* 200pxから160pxに縮小 */
+}
+
+.sidebar-brand {
+  padding: 1rem 0;
+  border-bottom: 1px solid #333;
+  display: flex;
+  justify-content: center;
+}
+
+.sidebar-main {
+  flex: 1;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar-footer {
+  padding: 1rem 0;
+  border-top: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar-item {
+  display: flex;
   align-items: center;
-  padding-top: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.sidebar img {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 20px;
+  justify-content: flex-start;
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  position: relative;
+  text-decoration: none;
+  transition: all 0.2s;
   cursor: pointer;
+  color: rgba(255, 255, 255, 0.87);
+  margin-bottom: 4px;
+  overflow: hidden; /* はみ出しを防ぐ */
+  box-sizing: border-box; /* パディングとボーダーを幅に含める */
 }
 
-.sidebar img:hover {
+.sidebar:not(.sidebar-expanded) .sidebar-item {
+  justify-content: center;
+  padding: 0;
+}
+
+.sidebar-item:hover {
+  background-color: #333;
+}
+
+.sidebar-item.active {
+  background-color: #bb86fc;
+  color: #000;
+  border-right: none; /* 右ボーダーを削除 */
+  position: relative;
+}
+
+.sidebar-item.active::before {
+  content: '';
+  position: absolute;
+  right: 2px; /* サイドバー内側に配置 */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 24px;
+  background-color: #fff;
+  border-radius: 2px;
+}
+
+/* 古い::afterスタイルを削除して、新しいアプローチに変更 */
+
+.sidebar-item.action-item:hover {
+  background-color: #bb86fc;
+  color: #000;
+}
+
+.sidebar-item.toggle-item:hover {
+  background-color: #bb86fc;
+  color: #000;
+}
+
+.sidebar-item img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0.8);
+  transition: filter 0.2s;
+  flex-shrink: 0;
+}
+
+.sidebar-item:hover img,
+.sidebar-item.active img {
   filter: brightness(1.2);
+}
+
+.sidebar-item.action-item img {
+  filter: invert(1);
+}
+
+.sidebar-item.action-item:hover img {
+  filter: invert(1) brightness(1.2);
+}
+
+.sidebar-item.toggle-item img {
+  filter: invert(1);
+}
+
+.sidebar-item.toggle-item:hover img {
+  filter: invert(1) brightness(1.2);
+}
+
+.sidebar-label {
+  margin-left: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Mobile responsive design */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 50px; /* モバイルでさらに縮小 */
+  }
+  
+  .sidebar.sidebar-expanded {
+    width: 140px; /* モバイルの展開時も小さく */
+  }
+  
+  .sidebar-item {
+    height: 40px; /* モバイルでボタンを小さく */
+  }
+  
+  .sidebar-item img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .sidebar-label {
+    font-size: 12px;
+  }
 }
 
 

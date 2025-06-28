@@ -1,52 +1,110 @@
+/* ConfirmDialog styles */
 .confirm-dialog-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 1100;
+    padding: 1rem;
 }
 
 .confirm-dialog {
-    background: #2c2c2c;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-    width: 90%;
+    background: #1e1e1e;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    width: 100%;
     max-width: 400px;
-    color: #ffffff;
-    text-align: center;
+    border: 1px solid #333;
+    overflow: hidden;
 }
 
-.confirm-dialog-buttons {
+.confirm-dialog-header {
+    padding: 1.5rem 2rem 1rem 2rem;
+    border-bottom: 1px solid #333;
+}
+
+.confirm-dialog-header h3 {
+    margin: 0;
+    color: #bb86fc;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.confirm-dialog-body {
+    padding: 1.5rem 2rem;
+}
+
+.confirm-dialog-body p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.5;
+    font-size: 1rem;
+}
+
+.confirm-dialog-actions {
     display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
+    gap: 1rem;
+    padding: 1.5rem 2rem;
+    justify-content: flex-end;
+    border-top: 1px solid #333;
 }
 
 .confirm-dialog-button {
-    padding: 10px 20px;
+    padding: 0.75rem 1.5rem;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
+    font-weight: 500;
     cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+    min-width: 80px;
 }
 
-.confirm-dialog-confirm {
-    background-color: #007bff;
-    color: white;
+.cancel-button {
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid #555;
 }
 
-.confirm-dialog-confirm:hover {
-    background-color: #0056b3;
+.cancel-button:hover {
+    background-color: #333;
+    color: #fff;
 }
 
-.confirm-dialog-cancel {
-    background-color: #dc3545;
-    color: white;
+.confirm-button {
+    background-color: #f44336;
+    color: #fff;
+}
+
+.confirm-button:hover {
+    background-color: #d32f2f;
+    transform: translateY(-1px);
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 480px) {
+    .confirm-dialog-overlay {
+        padding: 0.5rem;
+    }
+    
+    .confirm-dialog-header,
+    .confirm-dialog-body,
+    .confirm-dialog-actions {
+        padding: 1rem 1.5rem;
+    }
+    
+    .confirm-dialog-actions {
+        flex-direction: column-reverse;
+    }
+    
+    .confirm-dialog-button {
+        width: 100%;
+    }
 }
 
 .confirm-dialog-cancel:hover {

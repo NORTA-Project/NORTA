@@ -1,0 +1,120 @@
+/* Help Tooltip Styles */
+.help-tooltip-container {
+    position: relative;
+    display: inline-block;
+}
+
+.help-tooltip {
+    position: absolute;
+    z-index: 10000;
+    max-width: 250px;
+    padding: 0;
+    font-size: 13px;
+    line-height: 1.4;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: tooltipFadeIn 0.2s ease-out;
+}
+
+.help-tooltip-content {
+    background-color: #2d2d2d;
+    color: #ffffff;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    font-weight: 500;
+}
+
+.help-tooltip-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+/* Position variants */
+.help-tooltip-top {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 8px;
+}
+
+.help-tooltip-arrow-top {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #444;
+}
+
+.help-tooltip-bottom {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8px;
+}
+
+.help-tooltip-arrow-bottom {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #444;
+}
+
+.help-tooltip-left {
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 8px;
+}
+
+.help-tooltip-arrow-left {
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 6px solid #444;
+}
+
+.help-tooltip-right {
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 8px;
+}
+
+.help-tooltip-arrow-right {
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-right: 6px solid #444;
+}
+
+@keyframes tooltipFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .help-tooltip {
+        max-width: 200px;
+        font-size: 12px;
+    }
+    
+    .help-tooltip-content {
+        padding: 10px 12px;
+    }
+}
